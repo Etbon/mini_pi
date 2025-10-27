@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="mini_pi">
+
+  <!-- Colors -->
+  <xacro:include filename="$(find mini_pi_robot_description)/xacro/materials/materials.xacro"/>
+  
+  <!-- Shapes & Caster -->
+  <xacro:include filename="$(find mini_pi_robot_description)/xacro/macros/shapes.xacro"/>
+  <xacro:include filename="$(find mini_pi_robot_description)/xacro/macros/caster.xacro"/>
+
+  <!-- Robot Parts -->
+  <xacro:include filename="$(find mini_pi_robot_description)/xacro/parts/params.xacro"/>
+  <xacro:include filename="$(find mini_pi_robot_description)/xacro/parts/chassis.xacro"/>
+  <xacro:include filename="$(find mini_pi_robot_description)/xacro/parts/wheels.xacro"/>
+  <xacro:include filename="$(find mini_pi_robot_description)/xacro/parts/sensors_ultrasonic.xacro"/>
+
+  <!-- ============================ -->
+  <!-- =   Robot Model Assembly   = -->
+  <!-- ============================ -->
+
+  <!-- Root link -->
+  <link name="base_footprint"/>
+  <joint name="footprint_to_base" type="fixed">
+    <parent link="base_footprint"/>
+    <child  link="base_link"/>
+    <origin xyz="0 0 0.0585" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Define the base link-->
+  <link name="base_link">
+    <!-- Placeholder for base_link; no geometry or inertial properties defined -->
+  </link>
+
+  <!-- Chassis -->
+  <xacro:mini_pi_chassis parent="base_link"/>
+  
+  <!-- Wheels left & right -->
+  <xacro:mini_pi_wheels parent="base_link"/>
+  
+  <!-- Ultrasonic sensors 1,2,3,4 -->
+  <xacro:mini_pi_ultrasonic parent="base_link"/>
+
+  <!-- ==== Caster Wheels ==== -->
+  <xacro:caster_wheel 
+    name="front_caster"
+    parent_link="base_link"
+    pos_x="0.0400" pos_y="0" pos_z="-0.0495"
+    color_roll="Yellow"
+    color_pitch="Pink"
+    color_yaw="Blue"
+    length="0.0075"
+    radius="0.0075"
+    mass="0.0002"/> 
+
+  <xacro:caster_wheel 
+    name="back_caster"
+    parent_link="base_link"
+    pos_x="-0.0400" pos_y="0" pos_z="-0.0495"
+    color_roll="Yellow"
+    color_pitch="Pink"
+    color_yaw="Blue"
+    length="0.0075"
+    radius="0.0075"
+    mass="0.0002"/> 
+
+</robot>

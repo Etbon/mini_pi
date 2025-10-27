@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="mini_pi">
+
+  <!-- Base -->
+  <xacro:property name="base_size_x" value="0.097"/>
+  <xacro:property name="base_size_y" value="0.097"/>
+  <xacro:property name="base_size_z" value="0.097"/>
+  <xacro:property name="base_mass" value="1.0"/>
+
+  <!-- Wheels -->
+  <xacro:property name="wheel_radius" value="0.03"/>
+  <xacro:property name="wheel_width" value="0.02"/>
+  <xacro:property name="wheel_mass" value="0.05"/>
+  
+  <!-- Ultrasonic sensor -->
+  <xacro:property name="ultrasonic_x" value="0.02"/>
+  <xacro:property name="ultrasonic_y" value="0.02"/>
+  <xacro:property name="ultrasonic_z" value="0.01"/>
+
+</robot>

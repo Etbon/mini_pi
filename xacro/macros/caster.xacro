@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="mini_pi">
+
+  <!-- ==== Macro for Caster Wheel ==== -->
+  <xacro:macro name="caster_wheel" params="name pos_x pos_y pos_z color_yaw color_pitch color_roll parent_link mass radius length">
+    <!-- Caster Wheel Link (Yaw) -->
+    <link name="${name}_yaw_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <cylinder length="${length}" radius="${radius}"/>
+        </geometry>
+        <material name="${color_yaw}"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <cylinder length="${length}" radius="${radius}"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="${mass}"/>
+        <inertia
+          ixx="${(1.0/4.0) * mass * (radius * radius) + (1.0/12.0) * mass * (length * length)}"
+          ixy="0.0"
+          ixz="0.0"
+          iyy="${(1.0/4.0) * mass * (radius * radius) + (1.0/12.0) * mass * (length * length)}"
+          iyz="0.0"
+          izz="${(1.0/2.0) * mass * (radius * radius)}"/>
+      </inertial>
+    </link>
+    <!-- Yaw Joint -->
+    <joint name="${name}_yaw_joint" type="continuous">
+      <origin rpy="0 0 0" xyz="${pos_x} ${pos_y} ${pos_z}" />
+      <parent link="${parent_link}"/>
+      <child link="${name}_yaw_link"/>
+      <axis xyz="0 0 1"/>
+    </joint>
+
+    <!-- Caster Wheel Link (Roll) -->
+    <link name="${name}_roll_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 1.5708 0"/>
+        <geometry>
+          <cylinder length="${length}" radius="${radius}"/>
+        </geometry>
+        <material name="${color_roll}"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 1.5708 0"/>
+        <geometry>
+          <cylinder length="${length}" radius="${radius}"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 1.5708 0"/>
+        <mass value="${mass}"/>
+        <inertia
+          ixx="${(1.0/4.0) * mass * (radius * radius) + (1.0/12.0) * mass * (length * length)}"
+          ixy="0.0"
+          ixz="0.0"
+          iyy="${(1.0/4.0) * mass * (radius * radius) + (1.0/12.0) * mass * (length * length)}"
+          iyz="0.0"
+          izz="${(1.0/2.0) * mass * (radius * radius)}"/>
+      </inertial>
+    </link>
+    <!-- Roll Joint -->
+    <joint name="${name}_roll_joint" type="continuous">
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <parent link="${name}_yaw_link"/>
+      <child link="${name}_roll_link"/>
+      <axis xyz="1 0 0"/>
+    </joint>
+
+    <!-- Caster Wheel Link (Pitch) -->
+    <link name="${name}_pitch_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="${radius}" />
+        </geometry>
+        <material name="${color_pitch}"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <sphere radius="${radius}"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="${mass}"/>
+        <inertia 
+          ixx="${(2.0/5.0) * mass * (radius * radius)}"
+          ixy="0.0"
+          ixz="0.0"
+          iyy="${(2.0/5.0) * mass * (radius * radius)}"
+          iyz="0.0"
+          izz="${(2.0/5.0) * mass * (radius * radius)}"/>
+      </inertial>
+    </link>
+    <!-- Roll Joint -->
+    <joint name="${name}_pitch_joint" type="continuous">
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <parent link="${name}_roll_link"/>
+      <child link="${name}_pitch_link"/>
+      <axis xyz="0 1 0"/>
+    </joint>
+  </xacro:macro>
+
+</robot>
