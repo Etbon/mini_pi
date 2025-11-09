@@ -10,7 +10,7 @@
       material="Black"
       mass="${wheel_mass}"
       parent_link="${parent}"
-      xyz="0 -0.0385 -0.0275"
+      xyz="0 -0.0380 -0.0275"
       rpy="0 0 0"
       joint_type="continuous"
       axis="0 1 0"/>
@@ -22,10 +22,10 @@
       material="Black"
       mass="${wheel_mass}"
       parent_link="${parent}"
-      xyz="0 0.0385 -0.0275"
+      xyz="0 0.0380 -0.0275"
       rpy="0 0 0"
       joint_type="continuous"
       axis="0 1 0"/>
   </xacro:macro>
-
+    
 </robot>

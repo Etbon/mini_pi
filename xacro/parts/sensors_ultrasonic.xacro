@@ -1,6 +1,11 @@
-<?xml version="1.0"?>
-
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="mini_pi">
+
+  <!-- Sensor pose: rendering gazebo -->
+  <xacro:property name="ULTRA_FRONT" value="0.0485  0       0.0300  0  0  0" />
+  <xacro:property name="ULTRA_RIGHT" value="0      -0.0485  0.0300  0  0  4.7123" />
+  <xacro:property name="ULTRA_BACK"  value="-0.0485 0       0.0300  0  0  3.14159" />
+  <xacro:property name="ULTRA_LEFT"  value="0       0.0485  0.0300  0  0  1.5708" />
+
   <xacro:macro name="mini_pi_ultrasonic" params="parent">
     <xacro:square_link 
     name="ultrasonic_sensor_1"
@@ -49,6 +54,151 @@
     xyz="0 0.0485 0.0300"
     rpy="0 0 1.5708"
     joint_type="fixed"/>
+
+    <!-- Lidar attached directly to base_link (parent) -->
+    <gazebo reference="${parent}">
+      <sensor name="ultra_front" type="gpu_lidar">
+        <pose>${ULTRA_FRONT}</pose>
+        <topic>/ultra_front/scan</topic>
+        <always_on>true</always_on>
+        <visualize>true</visualize>
+        <update_rate>10</update_rate>
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>5</samples>
+              <resolution>1</resolution>
+              <min_angle>-0.12</min_angle>
+              <max_angle>0.12</max_angle>
+            </horizontal>
+            <vertical>
+              <samples>1</samples>
+              <resolution>1</resolution>
+              <min_angle>0.0</min_angle>
+              <max_angle>0.0</max_angle>
+            </vertical>
+          </scan>
+          <range>
+            <min>0.02</min>
+            <max>4.0</max>
+            <resolution>0.01</resolution>
+          </range>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.01</stddev>
+          </noise> 
+        </ray>
+      </sensor>
+    </gazebo>
+    
+    <gazebo reference="${parent}">
+      <sensor name="ultra_right" type="gpu_lidar">
+        <pose>${ULTRA_RIGHT}</pose>
+        <topic>/ultra_right/scan</topic>
+        <always_on>true</always_on>
+        <visualize>true</visualize>
+        <update_rate>10</update_rate>
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>5</samples>
+              <resolution>1</resolution>
+              <min_angle>-0.12</min_angle>
+              <max_angle>0.12</max_angle>
+            </horizontal>
+            <vertical>
+              <samples>1</samples>
+              <resolution>1</resolution>
+              <min_angle>0.0</min_angle>
+              <max_angle>0.0</max_angle>
+            </vertical>
+          </scan>
+          <range>
+            <min>0.02</min>
+            <max>4.0</max>
+            <resolution>0.01</resolution>
+          </range>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.01</stddev>
+          </noise> 
+        </ray>
+      </sensor>
+    </gazebo>
+
+    <gazebo reference="${parent}">
+      <sensor name="ultra_back" type="gpu_lidar">
+        <pose>${ULTRA_BACK}</pose>
+        <topic>/ultra_back/scan</topic>
+        <always_on>true</always_on>
+        <visualize>true</visualize>
+        <update_rate>10</update_rate>
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>5</samples>
+              <resolution>1</resolution>
+              <min_angle>-0.12</min_angle>
+              <max_angle>0.12</max_angle>
+            </horizontal>
+            <vertical>
+              <samples>1</samples>
+              <resolution>1</resolution>
+              <min_angle>0.0</min_angle>
+              <max_angle>0.0</max_angle>
+            </vertical>
+          </scan>
+          <range>
+            <min>0.02</min>
+            <max>4.0</max>
+            <resolution>0.01</resolution>
+          </range>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.01</stddev>
+          </noise> 
+        </ray>
+      </sensor>
+    </gazebo>
+
+    <gazebo reference="${parent}">
+      <sensor name="ultra_left" type="gpu_lidar">
+        <pose>${ULTRA_LEFT}</pose>
+        <topic>/ultra_left/scan</topic>
+        <always_on>true</always_on>
+        <visualize>true</visualize>
+        <update_rate>10</update_rate>
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>5</samples>
+              <resolution>1</resolution>
+              <min_angle>-0.12</min_angle>
+              <max_angle>0.12</max_angle>
+            </horizontal>
+            <vertical>
+              <samples>1</samples>
+              <resolution>1</resolution>
+              <min_angle>0.0</min_angle>
+              <max_angle>0.0</max_angle>
+            </vertical>
+          </scan>
+          <range>
+            <min>0.02</min>
+            <max>4.0</max>
+            <resolution>0.01</resolution>
+          </range>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.01</stddev>
+          </noise> 
+        </ray>
+      </sensor>
+    </gazebo>
 
   </xacro:macro>
 

@@ -8,7 +8,7 @@ from launch_ros.descriptions import ParameterValue
 
 def generate_launch_description():
   # Data input 
-  description_pkg = "mini_pi_robot_description"
+  description_pkg = "mini_pi_description"
   xacro_path = "xacro/mini_pi.xacro"
 
   # Xacro file 

@@ -3,17 +3,17 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="mini_pi">
 
   <!-- Colors -->
-  <xacro:include filename="$(find mini_pi_robot_description)/xacro/materials/materials.xacro"/>
+  <xacro:include filename="$(find mini_pi_description)/xacro/materials/materials.xacro"/>
   
   <!-- Shapes & Caster -->
-  <xacro:include filename="$(find mini_pi_robot_description)/xacro/macros/shapes.xacro"/>
-  <xacro:include filename="$(find mini_pi_robot_description)/xacro/macros/caster.xacro"/>
+  <xacro:include filename="$(find mini_pi_description)/xacro/macros/shapes.xacro"/>
+  <xacro:include filename="$(find mini_pi_description)/xacro/macros/caster.xacro"/>
 
   <!-- Robot Parts -->
-  <xacro:include filename="$(find mini_pi_robot_description)/xacro/parts/params.xacro"/>
-  <xacro:include filename="$(find mini_pi_robot_description)/xacro/parts/chassis.xacro"/>
-  <xacro:include filename="$(find mini_pi_robot_description)/xacro/parts/wheels.xacro"/>
-  <xacro:include filename="$(find mini_pi_robot_description)/xacro/parts/sensors_ultrasonic.xacro"/>
+  <xacro:include filename="$(find mini_pi_description)/xacro/parts/params.xacro"/>
+  <xacro:include filename="$(find mini_pi_description)/xacro/parts/chassis.xacro"/>
+  <xacro:include filename="$(find mini_pi_description)/xacro/parts/wheels.xacro"/>
+  <xacro:include filename="$(find mini_pi_description)/xacro/parts/sensors_ultrasonic.xacro"/>
 
   <!-- ============================ -->
   <!-- =   Robot Model Assembly   = -->
@@ -24,7 +24,7 @@
   <joint name="footprint_to_base" type="fixed">
     <parent link="base_footprint"/>
     <child  link="base_link"/>
-    <origin xyz="0 0 0.0585" rpy="0 0 0"/>
+    <origin xyz="0 0 0.0575" rpy="0 0 0"/>
   </joint>
 
   <!-- Define the base link-->
@@ -45,7 +45,7 @@
   <xacro:caster_wheel 
     name="front_caster"
     parent_link="base_link"
-    pos_x="0.0400" pos_y="0" pos_z="-0.0495"
+    pos_x="0.0400" pos_y="0" pos_z="-0.0500"
     color_roll="Yellow"
     color_pitch="Pink"
     color_yaw="Blue"
@@ -56,12 +56,42 @@
   <xacro:caster_wheel 
     name="back_caster"
     parent_link="base_link"
-    pos_x="-0.0400" pos_y="0" pos_z="-0.0495"
+    pos_x="-0.0400" pos_y="0" pos_z="-0.0500"
     color_roll="Yellow"
     color_pitch="Pink"
     color_yaw="Blue"
     length="0.0075"
     radius="0.0075"
     mass="0.0002"/> 
+
+  <!-- ==== Ros2 Controller ==== -->
+  <ros2_control name="MiniPiSystem" type="system">
+    <hardware>
+      <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+    </hardware>
+
+    <joint name="wheel_right_joint">
+      <command_interface name="velocity"/> 
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="wheel_left_joint">
+      <command_interface name="velocity"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+  </ros2_control>
+
+  <!-- ==== Gazebo plugin ==== -->
+  <gazebo>
+    <plugin filename="libgz_ros2_control-system.so" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+      <parameters>$(find mini_pi_description)/config/controller.yaml</parameters>
+    </plugin>
+    <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+
+  </gazebo>
 
 </robot>
